@@ -23,7 +23,7 @@ class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
   Future<List<Karyawan>> _readJsonData() async {
     final String response = await
-    rootBundle.loadString('assets/karyawan.json');
+    rootBundle.loadString('lib/assets/karyawan.json');
     final List<dynamic> data = json.decode(response);
     return data.map((json) => Karyawan.fromJson(json)).toList();
   }
