@@ -7,34 +7,31 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text(movie.title),
       ),
-      body: Column(
+      body:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network('https://image.tmdb.org/t/p/w500${movie.backdropPath}',
+          Image.network('https://image.tmdb.org/t/p/w500${movie.posterPath}',
             height: 300,
             width: double.infinity,
             fit: BoxFit.cover,
           ),
-          SizedBox(height: 10,),
-          Text('Overview:',style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-          ),
+          SizedBox(height:10),
+          Text('Overview:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10,),
           Text(movie.overview),
-          SizedBox(height: 10,),
           Row(
             children: [
-              Icon(Icons.calendar_month, color: Colors.blue,),
-              SizedBox(height: 10,),
-              Text('Relese Date', style: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold
-              ),),
+              Icon(Icons.calendar_month, color: Colors.blue),
+              Text(
+                'Relase Date:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 10,),
               Text(movie.releaseDate)
             ],
           ),
@@ -42,8 +39,8 @@ class DetailScreen extends StatelessWidget {
           Row(
             children: [
               Icon(Icons.star, color: Colors.amber,),
-              SizedBox(height: 10,),
-              Text('Rating:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+              SizedBox(width: 10,),
+              Text('Rating:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
               Text(movie.voteAverage.toString())
             ],
@@ -53,3 +50,31 @@ class DetailScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
