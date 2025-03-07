@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pilem/screens/home_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:pilem/screens/favorite_screen.dart';
-import 'package:pilem/screens/home_screen.dart';
 import 'package:pilem/screens/search_screen.dart';
+import 'package:pilem/screens/favorite_screen.dart';
 void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,51 +10,50 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pilem',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: MainScreen(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      home: const MainScreen(),
     );
   }
 }
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
-
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  MainScreenState createState() => MainScreenState();
 }
-
-class _MainScreenState extends State<MainScreen> {
-  int _SelectedIndex = 0;
-
-  final List<Widget> _screen = [
-    HomeScreen(),
-    SearchScreen(),
-    FavoriteScreen(),
+class MainScreenState extends State<MainScreen> {
+  int _selectedIndex = 0;
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const SearchScreen(),
+    const FavoriteScreen(),
   ];
-
   void _onItemTapped(int index) {
-    setState((){
-      _SelectedIndex = index;
+    setState(() {
+      _selectedIndex = index;
     });
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screen[_SelectedIndex],
+      body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _SelectedIndex,
+        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        items: [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Favorite",
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: "Search",
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
           ),
         ],
       ),
