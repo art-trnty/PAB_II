@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "582970174780",
+    "project_id": "fasum-app-451f5",
+    "storage_bucket": "fasum-app-451f5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582970174780:android:35a669bf1684dda12c8239",
+        "android_client_info": {
+          "package_name": "com.example.firebase_authentication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaT61eY-651PIk45CEm7bxeAG_x7Marhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
