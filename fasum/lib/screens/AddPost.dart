@@ -56,7 +56,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           _descriptionController.clear();
         });
         await _compressAndEncodeImage();
-        await _generateDescriptionWithAi();
+        // await _generateDescriptionWithAi();
       }
     } catch (e) {
       if (mounted) {
