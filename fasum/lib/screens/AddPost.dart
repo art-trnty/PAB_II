@@ -48,6 +48,73 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
   }
 
+  Future<void> _getLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      throw Exception('Location Services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if ( permission == LocationPermission.deniedForever||
+      permission == LocationPermission.denied){
+      throw Exception('Location Services are denied..');
+    }
+    try {
+      final position = await Geolocator.getCurrentPosition(
+        locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
+      ).timeout(const Duration(seconds: 10));
+      setState(() {
+        _latitude = position.latitude;
+        _longitude = position.longitude;
+      });
+    } catch (e){
+      debugPrint('Gagal mendapatkan Lokasi : $e');
+      setState(() {
+        _latitude = null;
+        _longitude = null;
+      });
+    }
+  }
+
+  Future<void> _submitPost() async {
+    if (_base64Image == null || _descriptionController.text.isEmpty) return;
+    setState(() => _isUploading = true);
+    final now = DateTime.now().toIso8601String();
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+
+    if (uid == null) {
+      setState(() => _isUploading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Pengguna tidak ditemukan')),
+      );
+      return;
+    }
+    try {
+      await _getLocation();
+      final userDoc = await FirebaseFirestore.instance.collection('users').doc(
+          uid).get();
+      final fullName = userDoc.data()?['fullName'] ?? 'Tanpa Nama';
+      await FirebaseFirestore.instance.collection('posts').add({
+        'image': _base64Image,
+        'description': _descriptionController.text,
+        'createdAt': now,
+        'latitude': _latitude,
+        'longitude': _longitude,
+        'fullName': fullName, // tambahkan ini
+        'userId': uid, // optional jika ingin simpan UID juga
+      });
+      if (!mounted) return;
+      Navigator.pop(context);
+    } catch (e) {
+      debugPrint('Uploud failed $e');
+      if (!mounted) return;
+    }
+  }
+
+
   Future<void> _compressAndEncodeImage() async {
     if (_image == null) return;
     try {
